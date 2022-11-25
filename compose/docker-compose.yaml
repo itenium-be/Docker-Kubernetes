@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  demo.api:
+    image: jeankedotcom/demo-backend:v1.1
+    links:
+      - "demo.db:demo-db-mongodb"
+    ports:
+      - "5011:80"
+  demo.frontend:
+    image: jeankedotcom/demo-frontend:v2.1
+    ports:
+      - "5010:80"
+    environment:
+      - REST_API_URL=http://174.138.12.148:5011
+  demo.db:
+    image: mongo
+    volumes:
+      - mongodb:/data/db
+      - mongodb_config:/data/configdb
+volumes:
+  mongodb:
+  mongodb_config:

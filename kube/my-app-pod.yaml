@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-app-pod
+  labels:
+    app: my-app-pod
+spec:
+  containers:
+    - name: my-app-container
+      image: devgem/my-app:3.0
+      env:
+        - name: my_message
+          value: "Hello from Itenium on Kubernetes"
+      resources:
+        limits:
+          cpu: 1500m
+          memory: 1024Mi
+        requests:
+          cpu: 50m
+          memory: 50Mi
