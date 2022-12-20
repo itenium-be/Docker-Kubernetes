@@ -14,4 +14,6 @@ Pre-requisites:
 Part 2
 ------
 
-Helm en Istio
+- Vervolg Kubernetes
+- Helm en Istio
+- Demo K3S en Tilt
