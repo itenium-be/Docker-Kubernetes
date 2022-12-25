@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: staging
+  name: your-app-pod
+  labels:
+    app: your-app-pod
+spec:
+  containers:
+    - name: your-app-container
+      image: devgem/my-app:3.0
+      env:
+        - name: my_message
+          value: "Hello from yourapp in staging on Kubernetes"
+      resources:
+        limits:
+          cpu: 1500m
+          memory: 1024Mi
+        requests:
+          cpu: 50m
+          memory: 50Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: staging
+  name: your-app-service
+spec:
+  selector:
+    app: your-app-pod
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: staging
+  name: your-app-ingress
+spec:
+  rules:
+    - host: yourapp-staging.itenium-training.be
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: your-app-service
+                port:
+                  number: 80
+  ingressClassName: nginx

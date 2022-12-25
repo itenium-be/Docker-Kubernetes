@@ -1,0 +1,14 @@
+kind: DestinationRule
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: demo-backend
+  namespace: istio-demo
+spec:
+  host: demo-backend
+  subsets:
+    - labels: # SELECTOR.
+        version: v1.1
+      name: v1-1
+    - labels: # SELECTOR.
+        version: v1.2
+      name: v1-2

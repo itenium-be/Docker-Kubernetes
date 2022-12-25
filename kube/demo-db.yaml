@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: demo
+  name: demo-db-mongodb
+  labels:
+    app: demo-db-mongodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-db-mongodb
+  template:
+    metadata:
+      namespace: demo
+      labels:
+        app: demo-db-mongodb
+    spec:
+      containers:
+        - name: demo-db-mongodb
+          image: mongo:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: demo
+  labels:
+    application: demo-db-mongodb
+  name: demo-db-mongodb
+spec:
+  selector:
+    app: demo-db-mongodb
+  ports:
+    - port: 27017
+      protocol: TCP
+      targetPort: 27017

@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-app-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.org/ssl-services: "my-app-service"
+spec:
+  tls:
+    - hosts:
+        - myapp.itenium-training.be
+      secretName: tls-for-star.itenium.training.be
+  rules:
+    - host: myapp.itenium-training.be
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: my-app-service
+                port:
+                  number: 80
+  ingressClassName: nginx

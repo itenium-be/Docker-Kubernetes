@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: istio-demo
+  name: demo-backend-v1-2
+  labels:
+    app: demo-backend
+    version: v1.2
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: demo-backend
+      version: v1.2
+  template:
+    metadata:
+      namespace: istio-demo
+      labels:
+        app: demo-backend
+        version: v1.2
+    spec:
+      containers:
+        - name: demo-backend
+          image: jeankedotcom/demo-backend:v1.2
+          resources:
+            limits:
+              cpu: 1500m
+              memory: 1024Mi
+            requests:
+              cpu: 50m
+              memory: 50Mi

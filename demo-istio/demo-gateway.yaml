@@ -1,0 +1,45 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  namespace: istio-demo
+  name: demo-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*.istio.itenium-training.be"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  namespace: istio-demo
+  name: demo-backend
+spec:
+  hosts:
+    - "api.istio.itenium-training.be"
+  gateways:
+    - demo-gateway
+  http:
+    - route:
+        - destination:
+            host: demo-backend
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  namespace: istio-demo
+  name: demo-frontend
+spec:
+  hosts:
+    - "app.istio.itenium-training.be"
+  gateways:
+    - demo-gateway
+  http:
+    - route:
+        - destination:
+            host: demo-frontend
